@@ -7,7 +7,6 @@ import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
 import android.view.MenuInflater;
 import android.view.View;
 
@@ -46,13 +45,9 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
-            /*
-            case R.id.new_game:
-                newGame();
+            case R.id.action_settings:
+                super.onOptionsItemSelected(item);
                 return true;
-            case R.id.help:
-                showHelp();
-                return true;*/
             default:
                 return super.onOptionsItemSelected(item);
         }
