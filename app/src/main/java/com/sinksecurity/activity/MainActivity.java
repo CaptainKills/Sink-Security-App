@@ -1,13 +1,15 @@
-package com.sinksecurity;
+package com.sinksecurity.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.sinksecurity.fragment.FirstFragment;
+import com.sinksecurity.R;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.view.MenuInflater;
@@ -46,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        //return super.onCreateOptionsMenu(menu);
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
         return true;
@@ -57,13 +58,16 @@ public class MainActivity extends AppCompatActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.action_settings:
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_container, new SettingsFragment());
-                transaction.addToBackStack("Open Settings Menu");
-                transaction.commit();
-                return true;
+                return goToActivity(PreferencesActivity.class);
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    private boolean goToActivity(Class activity){
+        Intent intent = new Intent(this, activity);
+        startActivity(intent);
+        return true;
+    }
+
 }
