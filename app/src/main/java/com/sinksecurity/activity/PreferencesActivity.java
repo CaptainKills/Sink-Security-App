@@ -1,6 +1,9 @@
 package com.sinksecurity.activity;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,6 +27,25 @@ public class PreferencesActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.setTitle("Settings");
             actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_preferences, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.action_reset_settings:
+                //Reset all the settings
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 
