@@ -27,7 +27,7 @@ public class SecondFragment extends Fragment {
         previousButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragment_container, new FirstFragment());
                 transaction.addToBackStack("Open FirstFragment");
                 transaction.commit();

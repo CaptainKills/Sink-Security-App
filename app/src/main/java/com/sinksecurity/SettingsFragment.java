@@ -28,7 +28,7 @@ public class SettingsFragment extends Fragment {
         returnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragment_container, new FirstFragment());
                 transaction.addToBackStack("Return to FirstFragment");
                 transaction.commit();
