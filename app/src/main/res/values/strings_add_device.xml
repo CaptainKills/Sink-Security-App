@@ -1,0 +1,10 @@
+<resources>
+    <!-- All String Constants for the AddDeviceActivity -->
+    <string name="title_add_device">Add New Device</string>
+
+    <string name="name_view">Device Name:</string>
+    <string name="name_hint">e.g. \'Bathtub\' or \'Kitchen Sink\'</string>
+
+    <string name="button_cancel">Cancel</string>
+    <string name="button_add">Add Device</string>
+</resources>

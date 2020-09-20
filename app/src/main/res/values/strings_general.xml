@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Sink Security</string>
+
+    <!--All Button Name Strings-->
+    <string name="next_button">Next</string>
+    <string name="previous_button">Previous</string>
+    <string name="return_button">Return</string>
+</resources>

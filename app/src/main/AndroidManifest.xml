@@ -10,6 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <activity android:name=".activity.AddDeviceActivity"
+            android:parentActivityName=".activity.MainActivity" />
+
+        <activity
+            android:name=".activity.PreferencesActivity"
+            android:parentActivityName=".activity.MainActivity" />
+
         <activity
             android:name=".activity.MainActivity"
             android:label="@string/app_name"
@@ -20,10 +27,6 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".activity.PreferencesActivity"
-            android:label="@string/title_activity_settings"
-            android:parentActivityName=".activity.MainActivity" />
     </application>
 
 </manifest>
