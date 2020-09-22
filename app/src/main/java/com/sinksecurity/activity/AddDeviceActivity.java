@@ -63,8 +63,9 @@ public class AddDeviceActivity extends AppCompatActivity {
 
 
         //Create new Device from input, and add it to the DeviceList
-        SinkSecurityDevice device = new SinkSecurityDevice(deviceName, deviceIP);
+        SinkSecurityDevice device = new SinkSecurityDevice(R.drawable.ic_android, deviceName, deviceIP);
         DeviceManager.addDevice(device);
+        DeviceManager.saveData(this);
         Snackbar.make(view, "Device got successfully added!", Snackbar.LENGTH_SHORT).show();
     }
 

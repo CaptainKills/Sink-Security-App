@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">Sink Security</string>
 
+    <!-- SharedPreferences Keys -->
+    <string name="device_manager_file_key">com.sinksecurity.DEVICE_MANAGER_FILE_KEY</string>
+    <string name="device_list_file_key">com.sinksecurity.DEVICE_LIST_FILE_KEY</string>
+
     <!--All Button Name Strings-->
     <string name="next_button">Next</string>
     <string name="previous_button">Previous</string>

@@ -10,4 +10,9 @@
 
     <string name="button_cancel">Cancel</string>
     <string name="button_add">Add Device</string>
+
+    <!-- Standard DeviceItem Placeholders -->
+    <string name="device_name_placeholder">Device Name</string>
+    <string name="device_description_placeholder">Device Description</string>
+    <string name="device_image_description">Device Icon</string>
 </resources>

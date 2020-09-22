@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.sinksecurity.devices.DeviceManager;
 import com.sinksecurity.fragment.FirstFragment;
 import com.sinksecurity.R;
 
@@ -24,10 +25,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        DeviceManager.loadData(this);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        setupFragmentDisplay();
+        //setupFragmentDisplay();
 
         FloatingActionButton fab = findViewById(R.id.add_device_fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -61,11 +64,6 @@ public class MainActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
     }
 
     private boolean goToActivity(Class activity){

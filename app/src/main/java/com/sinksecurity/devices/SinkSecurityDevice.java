@@ -5,6 +5,7 @@ import java.net.InetAddress;
 
 public class SinkSecurityDevice {
 
+    private int deviceImage;
     private String name;
     private InetAddress ip;
 
@@ -16,14 +17,30 @@ public class SinkSecurityDevice {
      * @param ip
      * Internet IP address of the devices. Used to connect to the Arduino Internet Module.
      */
-    public SinkSecurityDevice(String name, InetAddress ip){
+    public SinkSecurityDevice(int deviceImage, String name, InetAddress ip){
+        this.deviceImage = deviceImage;
         this.name = name;
         this.ip = ip;
     }
 
     /**
-     * Returns the Device Name
-     * @return String
+     * @return Returns the Device Image
+     */
+    public int getDeviceImage() {
+        return deviceImage;
+    }
+
+    /**
+     * Sets the Device Image.
+     * @param deviceImage
+     * Image (icon) of the Device
+     */
+    public void setDeviceImage(int deviceImage) {
+        this.deviceImage = deviceImage;
+    }
+
+    /**
+     * @return Returns the Device Name
      */
     public String getName() {
         return name;
@@ -39,8 +56,7 @@ public class SinkSecurityDevice {
     }
 
     /**
-     * Returns the Device IP Address
-     * @return Integer
+     * @return Returns the Device IP Address
      */
     public InetAddress getIp() {
         return ip;
