@@ -5,12 +5,10 @@ import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.sinksecurity.devices.DeviceManager;
-import com.sinksecurity.fragment.FirstFragment;
 import com.sinksecurity.R;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.view.MenuInflater;
 import android.view.View;
@@ -30,8 +28,6 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //setupFragmentDisplay();
-
         FloatingActionButton fab = findViewById(R.id.add_device_fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,12 +35,6 @@ public class MainActivity extends AppCompatActivity {
                goToActivity(AddDeviceActivity.class);
             }
         });
-    }
-
-    private void setupFragmentDisplay(){
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, new FirstFragment());
-        transaction.commit();
     }
 
     @Override
