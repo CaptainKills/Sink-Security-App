@@ -67,6 +67,7 @@ public class AddDeviceActivity extends AppCompatActivity {
         DeviceManager.addDevice(device);
         DeviceManager.saveData(this);
         Snackbar.make(view, "Device got successfully added!", Snackbar.LENGTH_SHORT).show();
+        NavUtils.navigateUpFromSameTask(this);
     }
 
     public void cancelDevice(View view){

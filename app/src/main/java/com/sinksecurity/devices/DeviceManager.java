@@ -52,4 +52,8 @@ public class DeviceManager {
             deviceList = new LinkedHashMap<String, SinkSecurityDevice>();
         }
     }
+
+    public static int getDeviceListSize(){
+        return deviceList.size();
+    }
 }
