@@ -1,9 +1,12 @@
-package com.sinksecurity.device;
+package com.sinksecurity.devices;
+
+import java.net.Inet4Address;
+import java.net.InetAddress;
 
 public class SinkSecurityDevice {
 
     private String name;
-    private int ip;
+    private InetAddress ip;
 
     /**
      * Class that represents an instance of SinkSecurityDevice. Keeps tracks of Device variables.
@@ -13,8 +16,9 @@ public class SinkSecurityDevice {
      * @param ip
      * Internet IP address of the devices. Used to connect to the Arduino Internet Module.
      */
-    public SinkSecurityDevice(String name, int ip){
-
+    public SinkSecurityDevice(String name, InetAddress ip){
+        this.name = name;
+        this.ip = ip;
     }
 
     /**
@@ -35,10 +39,10 @@ public class SinkSecurityDevice {
     }
 
     /**
-     * Returns the Device Name
-     * @return Inet4Address
+     * Returns the Device IP Address
+     * @return Integer
      */
-    public int getIp() {
+    public InetAddress getIp() {
         return ip;
     }
 
@@ -47,7 +51,7 @@ public class SinkSecurityDevice {
      * @param ip
      * IP Address of the Device
      */
-    public void setIp(int ip) {
+    public void setIp(InetAddress ip) {
         this.ip = ip;
     }
 }
