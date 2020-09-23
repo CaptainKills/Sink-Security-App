@@ -1,6 +1,7 @@
 <resources>
     <!-- All String Constants for the AddDeviceActivity -->
     <string name="title_add_device">Add New Device</string>
+    <string name="title_device_page">Device Information</string>
     <string name="device_page_menu_item">Device Page</string>
 
     <string name="name_view">Device Name:</string>

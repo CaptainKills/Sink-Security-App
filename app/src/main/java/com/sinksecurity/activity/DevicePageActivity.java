@@ -16,7 +16,7 @@ public class DevicePageActivity extends AppCompatActivity {
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setTitle(R.string.title_add_device);
+            actionBar.setTitle(R.string.title_device_page);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
     }
