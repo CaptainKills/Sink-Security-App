@@ -6,13 +6,16 @@ import android.content.SharedPreferences;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.sinksecurity.R;
+import com.sinksecurity.backend.DeviceAdapter;
 
 import java.lang.reflect.Type;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class DeviceManager {
 
     private static LinkedHashMap<String, SinkSecurityDevice> deviceList;
+    private static DeviceAdapter deviceAdapter;
 
     public static LinkedHashMap<String, SinkSecurityDevice> getDeviceList(){
         return deviceList;
@@ -20,10 +23,17 @@ public class DeviceManager {
 
     public static void addDevice(SinkSecurityDevice device){
         deviceList.put(device.getName(), device);
+        deviceAdapter.notifyItemInserted(getDevicePosition(device));
     }
 
     public static void removeDevice(SinkSecurityDevice device){
         deviceList.remove(device.getName());
+        deviceAdapter.notifyItemRemoved(getDevicePosition(device));
+    }
+
+    public static void removeDevice(int position){
+        deviceList.remove(getDevice(position).getName());
+        deviceAdapter.notifyItemRemoved(position);
     }
 
     public static void saveData(Context context){
@@ -53,7 +63,38 @@ public class DeviceManager {
         }
     }
 
+    public static int getDevicePosition(SinkSecurityDevice device){
+        int position = 0;
+        for(Map.Entry<String, SinkSecurityDevice> entry : deviceList.entrySet()){
+            if(device.getName().equals(entry.getValue().getName())){
+                System.out.println("Positon of Device: " + position);
+                break;
+            }
+            position++;
+        }
+        return position;
+    }
+
+    public static SinkSecurityDevice getDevice(int position){
+        SinkSecurityDevice device = null;
+        int i = 0;
+        for(Map.Entry<String, SinkSecurityDevice> entry : deviceList.entrySet()){
+            if(i == position){
+                device =  entry.getValue();
+                System.out.println("Device Found!");
+                break;
+            }
+            i++;
+        }
+
+        return device;
+    }
+
     public static int getDeviceListSize(){
         return deviceList.size();
+    }
+
+    public static void setDeviceAdapter(DeviceAdapter adapter){
+        deviceAdapter = adapter;
     }
 }

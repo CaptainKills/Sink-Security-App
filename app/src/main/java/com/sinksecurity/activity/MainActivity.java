@@ -16,13 +16,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.sinksecurity.R;
-import com.sinksecurity.backend.CustomAdapter;
+import com.sinksecurity.backend.DeviceAdapter;
 import com.sinksecurity.devices.DeviceManager;
+import com.sinksecurity.devices.SinkSecurityDevice;
+
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    private RecyclerView.Adapter adapter;
+    private DeviceAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
 
     @Override
@@ -51,11 +54,28 @@ public class MainActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
 
         LayoutAnimationController controller = AnimationUtils.loadLayoutAnimation(this, R.anim.layout_animation);
-        adapter = new CustomAdapter(DeviceManager.getDeviceList());
+        adapter = new DeviceAdapter(DeviceManager.getDeviceList());
+        adapter.setItemClickListener(new DeviceAdapter.onItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                DeviceManager.getDevice(position);
+
+                //TODO: Take information of Specific device into account.
+                goToActivity(DevicePageActivity.class);
+            }
+
+            @Override
+            public void onDeleteClick(int position) {
+                DeviceManager.removeDevice(position);
+                DeviceManager.saveData(MainActivity.this);
+            }
+        });
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutAnimation(controller);
+
+        DeviceManager.setDeviceAdapter(adapter);
     }
 
     @Override
