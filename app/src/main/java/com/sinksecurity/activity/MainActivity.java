@@ -59,11 +59,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
+    public void onTopResumedActivityChanged(boolean isTopResumedActivity) {
+        super.onTopResumedActivityChanged(isTopResumedActivity);
 
-        if(adapter != null && hasFocus == true) {
-            //adapter.notifyDataSetChanged();
+        if(adapter != null && isTopResumedActivity == true) {
             recyclerView.startLayoutAnimation();
         }
     }
