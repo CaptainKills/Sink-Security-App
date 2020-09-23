@@ -1,21 +1,17 @@
 package com.sinksecurity.activity;
 
+import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NavUtils;
 
-import android.os.Bundle;
-import android.text.Editable;
-import android.view.View;
-import android.widget.EditText;
-
 import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.textfield.TextInputEditText;
 import com.sinksecurity.R;
 import com.sinksecurity.devices.DeviceManager;
 import com.sinksecurity.devices.SinkSecurityDevice;
-
-import org.w3c.dom.Text;
 
 import java.net.Inet4Address;
 import java.net.InetAddress;

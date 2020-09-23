@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <activity android:name=".activity.DevicePageActivity"
+            android:parentActivityName=".activity.MainActivity"/>
+
         <activity android:name=".activity.AddDeviceActivity"
             android:parentActivityName=".activity.MainActivity" />
 

@@ -2,25 +2,22 @@ package com.sinksecurity.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.sinksecurity.backend.CustomAdapter;
-import com.sinksecurity.devices.DeviceManager;
-import com.sinksecurity.R;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.MenuInflater;
-import android.view.View;
-
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.animation.AnimationUtils;
-import android.view.animation.LayoutAnimationController;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.sinksecurity.R;
+import com.sinksecurity.backend.CustomAdapter;
+import com.sinksecurity.devices.DeviceManager;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -65,8 +62,8 @@ public class MainActivity extends AppCompatActivity {
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
 
-        if(adapter != null) {
-            adapter.notifyDataSetChanged();
+        if(adapter != null && hasFocus == true) {
+            //adapter.notifyDataSetChanged();
             recyclerView.startLayoutAnimation();
         }
     }
@@ -83,6 +80,8 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
+            case R.id.action_device_page:
+                return goToActivity(DevicePageActivity.class);
             case R.id.action_settings:
                 return goToActivity(PreferencesActivity.class);
             default:
