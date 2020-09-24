@@ -15,7 +15,7 @@ import com.sinksecurity.devices.SinkSecurityDevice;
 
 import java.util.LinkedHashMap;
 
-public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceViewHolder> {
+public class DeviceAdapter extends RecyclerView.Adapter<DeviceViewHolder> {
 
     public interface onItemClickListener {
         void onItemClick(int position);
@@ -29,45 +29,6 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceView
     private LinkedHashMap<String, SinkSecurityDevice> deviceList;
     private onItemClickListener clickListener;
 
-    public static class DeviceViewHolder extends RecyclerView.ViewHolder {
-        public ImageView deviceImageView;
-        public TextView deviceNameView;
-        public TextView deviceDescriptionView;
-        public ImageView deviceDeleteImage;
-
-        public DeviceViewHolder(@NonNull View itemView, final onItemClickListener listener) {
-            super(itemView);
-
-            deviceImageView = itemView.findViewById(R.id.device_icon);
-            deviceNameView = itemView.findViewById(R.id.device_name);
-            deviceDescriptionView = itemView.findViewById(R.id.device_description);
-            deviceDeleteImage = itemView.findViewById(R.id.device_delete);
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(listener != null){
-                        int position = getAdapterPosition();
-                        if(position != RecyclerView.NO_POSITION){
-                            listener.onItemClick(position);
-                        }
-                    }
-                }
-            });
-
-            deviceDeleteImage.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(listener != null){
-                        int position = getAdapterPosition();
-                        if(position != RecyclerView.NO_POSITION){
-                            listener.onDeleteClick(position);
-                        }
-                    }
-                }
-            });
-        }
-    }
 
     public DeviceAdapter(LinkedHashMap<String, SinkSecurityDevice> deviceList){
         this.deviceList = deviceList;
