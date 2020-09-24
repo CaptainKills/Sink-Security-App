@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.sinksecurity.R;
 
-public class DeviceViewHolder extends RecyclerView.ViewHolder {
+class DeviceViewHolder extends RecyclerView.ViewHolder {
     public ImageView deviceImageView;
     public TextView deviceNameView;
     public TextView deviceDescriptionView;
@@ -26,9 +26,9 @@ public class DeviceViewHolder extends RecyclerView.ViewHolder {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(listener != null){
+                if (listener != null) {
                     int position = getAdapterPosition();
-                    if(position != RecyclerView.NO_POSITION){
+                    if (position != RecyclerView.NO_POSITION) {
                         listener.onItemClick(position);
                     }
                 }
@@ -38,9 +38,9 @@ public class DeviceViewHolder extends RecyclerView.ViewHolder {
         deviceDeleteImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(listener != null){
+                if (listener != null) {
                     int position = getAdapterPosition();
-                    if(position != RecyclerView.NO_POSITION){
+                    if (position != RecyclerView.NO_POSITION) {
                         listener.onDeleteClick(position);
                     }
                 }
