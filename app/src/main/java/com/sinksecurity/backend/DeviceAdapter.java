@@ -3,6 +3,8 @@ package com.sinksecurity.backend;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,8 +16,14 @@ import com.sinksecurity.devices.DeviceManager;
 import com.sinksecurity.devices.SinkSecurityDevice;
 
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.Map;
 
-public class DeviceAdapter extends RecyclerView.Adapter<DeviceViewHolder> {
+public class DeviceAdapter extends RecyclerView.Adapter<DeviceViewHolder> implements Filterable {
+
+    private LinkedHashMap<String, SinkSecurityDevice> deviceList;
+    private LinkedHashMap<String, SinkSecurityDevice> deviceListCopy;
+    private onItemClickListener clickListener;
 
     /**
      * Interface of the onItemClickListener. This interface holds all the methods that should be
@@ -35,9 +43,6 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceViewHolder> {
         this.clickListener = listener;
     }
 
-    private LinkedHashMap<String, SinkSecurityDevice> deviceList;
-    private onItemClickListener clickListener;
-
     /**
      * Constructor of the DeviceAdapter. This will initialise the list of devices that will be used
      * to make the list and display it to the user.
@@ -46,6 +51,7 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceViewHolder> {
      */
     public DeviceAdapter(LinkedHashMap<String, SinkSecurityDevice> deviceList){
         this.deviceList = deviceList;
+        this.deviceListCopy = new LinkedHashMap<>(deviceList);
     }
 
     /**
@@ -85,5 +91,37 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceViewHolder> {
     @Override
     public int getItemCount() {
         return deviceList.size();
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                LinkedHashMap<String, SinkSecurityDevice> filteredList = new LinkedHashMap<>();
+
+                if(constraint == null || constraint.length() == 0){
+                    filteredList.putAll(deviceListCopy);
+                } else{
+                    String filterPattern = constraint.toString().toLowerCase().trim();
+                    for(Map.Entry<String, SinkSecurityDevice> entry : deviceListCopy.entrySet()){
+                        if(entry.getKey().toLowerCase().contains(filterPattern)){
+                            filteredList.put(entry.getKey(), entry.getValue());
+                        }
+                    }
+                }
+
+                FilterResults results = new FilterResults();
+                results.values = filteredList;
+                return results;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                deviceList.clear();
+                deviceList.putAll((LinkedHashMap) results.values);
+                notifyDataSetChanged();
+            }
+        };
     }
 }

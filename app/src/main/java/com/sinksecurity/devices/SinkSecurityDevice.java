@@ -1,9 +1,13 @@
 package com.sinksecurity.devices;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.net.Inet4Address;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 
-public class SinkSecurityDevice {
+public class SinkSecurityDevice implements Parcelable {
 
     private int deviceImage;
     private String name;
@@ -21,6 +25,36 @@ public class SinkSecurityDevice {
         this.deviceImage = deviceImage;
         this.name = name;
         this.ip = ip;
+    }
+
+    protected SinkSecurityDevice(Parcel in) {
+        deviceImage = in.readInt();
+        name = in.readString();
+        //ip = extractIp(in.readString());
+    }
+
+    public static final Creator<SinkSecurityDevice> CREATOR = new Creator<SinkSecurityDevice>() {
+        @Override
+        public SinkSecurityDevice createFromParcel(Parcel in) {
+            return new SinkSecurityDevice(in);
+        }
+
+        @Override
+        public SinkSecurityDevice[] newArray(int size) {
+            return new SinkSecurityDevice[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(deviceImage);
+        dest.writeString(name);
+        //dest.writeString(ip.toString());
     }
 
     /**
@@ -65,9 +99,26 @@ public class SinkSecurityDevice {
     /**
      * Sets the Device IP Address.
      * @param ip
-     * IP Address of the Device
+     * IP Address of the Device as an InetAddress
      */
     public void setIp(InetAddress ip) {
         this.ip = ip;
+    }
+
+    /**
+     * Extract IP Address from a String
+     * @param ip
+     * IP Address of the Device as a String
+     */
+    public InetAddress extractIp(String ip) {
+        InetAddress ip_address = null;
+        try{
+            ip_address = InetAddress.getByName(ip);
+        } catch (UnknownHostException e){
+            e.printStackTrace();
+        }
+
+        return ip_address;
+
     }
 }

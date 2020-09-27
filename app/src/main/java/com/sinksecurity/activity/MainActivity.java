@@ -20,8 +20,6 @@ import com.sinksecurity.backend.DeviceAdapter;
 import com.sinksecurity.devices.DeviceManager;
 import com.sinksecurity.devices.SinkSecurityDevice;
 
-import java.util.Map;
-
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
@@ -58,10 +56,11 @@ public class MainActivity extends AppCompatActivity {
         adapter.setItemClickListener(new DeviceAdapter.onItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                DeviceManager.getDevice(position);
+                SinkSecurityDevice device = DeviceManager.getDevice(position);
 
-                //TODO: Take information of Specific device into account.
-                goToActivity(DevicePageActivity.class);
+                Intent intent = new Intent(MainActivity.this, DevicePageActivity.class);
+                intent.putExtra("SinkSecurityDevice", device);
+                startActivity(intent);
             }
 
             @Override
