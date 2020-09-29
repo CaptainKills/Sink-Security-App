@@ -142,4 +142,12 @@ public class DeviceManager {
     public static void setDeviceAdapter(DeviceAdapter adapter){
         deviceAdapter = adapter;
     }
+
+    /**
+     *
+     * @return Returns the DeviceAdapter that takes care of the item list.
+     */
+    public static DeviceAdapter getDeviceAdapter(){
+        return deviceAdapter;
+    }
 }

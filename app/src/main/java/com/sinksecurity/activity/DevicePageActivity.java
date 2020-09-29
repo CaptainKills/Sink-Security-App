@@ -2,11 +2,15 @@ package com.sinksecurity.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NavUtils;
 
 import com.sinksecurity.R;
+import com.sinksecurity.backend.DeviceAdapter;
+import com.sinksecurity.devices.DeviceManager;
 import com.sinksecurity.devices.SinkSecurityDevice;
 
 public class DevicePageActivity extends AppCompatActivity {
@@ -34,6 +38,14 @@ public class DevicePageActivity extends AppCompatActivity {
      */
     private void setPageContents(){
 
+    }
+
+    public void deleteDevice(View view){
+        DeviceManager.removeDevice(clickedDevice);
+        int position = DeviceManager.getDevicePosition(clickedDevice);
+        DeviceManager.getDeviceAdapter().notifyItemRemoved(position);
+
+        NavUtils.navigateUpFromSameTask(this);
     }
 
 }
