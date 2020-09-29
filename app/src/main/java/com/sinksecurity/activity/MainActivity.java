@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
+import android.view.inputmethod.EditorInfo;
 import android.widget.SearchView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -113,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean searchDeviceList(MenuItem item){
         SearchView searchView = (SearchView) item.getActionView();
         searchView.setIconifiedByDefault(false);
-        searchView.setSubmitButtonEnabled(true);
+        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
