@@ -3,6 +3,7 @@ package com.sinksecurity.activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +20,7 @@ import java.net.UnknownHostException;
 
 public class AddDeviceActivity extends AppCompatActivity {
 
+    private int selectedDeviceIconID;
     private EditText nameInputView;
     private EditText ipInputView;
 
@@ -33,9 +35,37 @@ public class AddDeviceActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
+        buildLayout();
+    }
+
+    private void buildLayout(){
+        RadioGroup iconRadioGroup = (RadioGroup) findViewById(R.id.icon_radioGroup);
         nameInputView = (EditText) findViewById(R.id.name_input);
         ipInputView = (EditText) findViewById(R.id.ip_input);
+
+        iconRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+                switch (checkedId){
+                    case R.id.radio_bathtub:
+                        selectedDeviceIconID = R.drawable.ic_bathroom_icon;
+                        break;
+                    case R.id.radio_sink_normal:
+                        selectedDeviceIconID = R.drawable.ic_regular_tap_icon;
+                        break;
+                    case R.id.radio_sink_outside:
+                        selectedDeviceIconID = R.drawable.ic_outside_tap_icon;
+                        break;
+                    default:
+                        selectedDeviceIconID = R.drawable.ic_android;
+                        break;
+                }
+
+            }
+        });
     }
+
 
     public void addDevice(View view){
         String deviceName = nameInputView.getText().toString();
@@ -59,7 +89,7 @@ public class AddDeviceActivity extends AppCompatActivity {
 
 
         //Create new Device from input, and add it to the DeviceList
-        SinkSecurityDevice device = new SinkSecurityDevice(R.drawable.ic_android, deviceName, deviceIP);
+        SinkSecurityDevice device = new SinkSecurityDevice(selectedDeviceIconID, deviceName, deviceIP);
         DeviceManager.addDevice(device);
         DeviceManager.saveData(this);
         Snackbar.make(view, "Device got successfully added!", Snackbar.LENGTH_SHORT).show();

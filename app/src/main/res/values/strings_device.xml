@@ -3,6 +3,8 @@
     <string name="title_add_device">Add New Device</string>
     <string name="title_device_page">Device Information</string>
 
+    <string name="icon_view">Device Icon:</string>
+
     <string name="name_view">Device Name:</string>
     <string name="name_hint">e.g. \'Bathtub\' or \'Kitchen Sink\'</string>
 
