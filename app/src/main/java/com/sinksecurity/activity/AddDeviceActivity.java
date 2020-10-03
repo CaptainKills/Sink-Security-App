@@ -20,7 +20,8 @@ import java.net.UnknownHostException;
 
 public class AddDeviceActivity extends AppCompatActivity {
 
-    private int selectedDeviceIconID;
+    private int selectedDeviceIconID = R.drawable.ic_bathroom_icon
+            ;
     private EditText nameInputView;
     private EditText ipInputView;
 
@@ -46,7 +47,6 @@ public class AddDeviceActivity extends AppCompatActivity {
         iconRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-
                 switch (checkedId){
                     case R.id.radio_bathtub:
                         selectedDeviceIconID = R.drawable.ic_bathroom_icon;
@@ -61,7 +61,6 @@ public class AddDeviceActivity extends AppCompatActivity {
                         selectedDeviceIconID = R.drawable.ic_android;
                         break;
                 }
-
             }
         });
     }
@@ -71,11 +70,12 @@ public class AddDeviceActivity extends AppCompatActivity {
         String deviceName = nameInputView.getText().toString();
         String ipString = ipInputView.getText().toString();
 
-        System.out.println("NAME: " + deviceName + ", IP: " + ipString);
-
-        //Check if one of the values is empty (i.e. null)
+        //Check for errors in the input fields.
         if(nameInputView.length() == 0 || ipInputView.length() == 0){
             Snackbar.make(view, "Please fill in all fields before adding a device.", Snackbar.LENGTH_SHORT).show();
+            return;
+        } else if(DeviceManager.getDeviceList().keySet().contains(deviceName)){
+            Snackbar.make(view, "This Device name already exists.", Snackbar.LENGTH_SHORT).show();
             return;
         }
 
