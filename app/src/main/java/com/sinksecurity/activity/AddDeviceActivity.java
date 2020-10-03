@@ -20,8 +20,7 @@ import java.net.UnknownHostException;
 
 public class AddDeviceActivity extends AppCompatActivity {
 
-    private int selectedDeviceIconID = R.drawable.ic_bathroom_icon
-            ;
+    private int selectedDeviceIconID = R.drawable.ic_bathroom_icon;
     private EditText nameInputView;
     private EditText ipInputView;
 
