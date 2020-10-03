@@ -1,5 +1,6 @@
 package com.sinksecurity.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -11,6 +12,7 @@ import android.view.animation.LayoutAnimationController;
 import android.view.inputmethod.EditorInfo;
 import android.widget.SearchView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -66,9 +68,19 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onDeleteClick(int position) {
-                DeviceManager.removeDevice(position);
-                DeviceManager.saveData(MainActivity.this);
+            public void onDeleteClick(final int position) {
+                new AlertDialog.Builder(MainActivity.this)
+                        .setTitle("Are you sure?")
+                        .setMessage("Do you really want to delete this device?")
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                DeviceManager.removeDevice(position);
+                                DeviceManager.saveData(MainActivity.this);
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, null).show();
             }
         });
 
