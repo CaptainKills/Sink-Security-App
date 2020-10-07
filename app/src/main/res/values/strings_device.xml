@@ -14,10 +14,27 @@
     <string name="button_cancel">Cancel</string>
     <string name="button_add">Add Device</string>
 
+    <!-- All string constant for the DeviceInfoPageActivity -->
+    <string name="info_page_delete_text">Delete</string>
+    <string name="info_page_disconnect_text">Disconnect</string>
+
     <!-- Standard DeviceItem Placeholders -->
     <string name="device_name_placeholder">Device Name</string>
     <string name="device_description_placeholder">Device Description</string>
     <string name="device_image_description">Device Icon</string>
     <string name="device_image_disconnect_description">Disconnect Device Icon</string>
     <string name="device_image_delete_description">Delete Device Icon</string>
+
+    <!-- Device Information Page constants -->
+    <string name="status_view">Device Status:</string>
+    <string name="device_status_check_text">Checking device status...</string>
+    <string name="device_status_failed_text">Could not connect to device.</string>
+    <string name="device_status_error_text">Failed to check status.</string>
+
+    <string name="status_level_0">No water detected.</string>
+    <string name="status_level_1">Currently rising water at level 1!</string>
+    <string name="status_level_2">Currently rising water at level 2!</string>
+    <string name="status_level_3">Currently rising water at level 3!</string>
+
+    <string name="device_ip_placeholder">192.168.178.1</string>
 </resources>

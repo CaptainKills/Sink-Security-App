@@ -3,8 +3,8 @@
     <color name="main_icon_orange">#F7931E</color>
     <color name="main_icon_blue">#0071BC</color>
 
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
+    <color name="colorPrimary">@color/main_icon_orange</color> <!-- #6200EE -->
+    <color name="colorPrimaryDark">#3700B3</color> <!-- #3700B3 -->
+    <color name="colorAccent">@color/main_icon_blue</color> <!-- #03DAC5 -->
     <color name="colorLauncherBackground">#FFFFFF</color>
 </resources>
