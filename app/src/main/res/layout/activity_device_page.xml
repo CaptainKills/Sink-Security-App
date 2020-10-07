@@ -82,7 +82,7 @@
         app:srcCompat="@drawable/ic_delete" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/version_textView"
         android:layout_width="209dp"
         android:layout_height="25dp"
         android:text="@string/app_version"

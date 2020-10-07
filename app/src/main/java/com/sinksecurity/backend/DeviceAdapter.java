@@ -85,7 +85,7 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceViewHolder> implem
 
         holder.deviceImageView.setImageResource(currentDevice.getDeviceImage());
         holder.deviceNameView.setText(currentDevice.getName());
-        holder.deviceDescriptionView.setText(currentDevice.getIp().toString());
+        holder.deviceDescriptionView.setText(currentDevice.getIp());
     }
 
     @Override

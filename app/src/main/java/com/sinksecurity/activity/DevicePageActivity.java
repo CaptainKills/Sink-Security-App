@@ -3,18 +3,34 @@ package com.sinksecurity.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NavUtils;
 
+import com.android.volley.Cache;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Network;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.BasicNetwork;
+import com.android.volley.toolbox.DiskBasedCache;
+import com.android.volley.toolbox.HurlStack;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.sinksecurity.R;
 import com.sinksecurity.devices.DeviceManager;
 import com.sinksecurity.devices.SinkSecurityDevice;
 
 public class DevicePageActivity extends AppCompatActivity {
 
-    SinkSecurityDevice clickedDevice;
+    private RequestQueue requestQueue;
+    private SinkSecurityDevice clickedDevice;
+
+    private TextView text;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,13 +46,40 @@ public class DevicePageActivity extends AppCompatActivity {
         Intent intent = getIntent();
         clickedDevice = intent.getParcelableExtra("SinkSecurityDevice");
         setPageContents();
+        createRequestQueue();
     }
 
     /**
      * Configures all page contents with the SinkSecurityDevice information
      */
     private void setPageContents(){
+        text = findViewById(R.id.version_textView);
+        text.setText("Checking status...");
+    }
 
+    private void createRequestQueue(){
+        requestQueue = Volley.newRequestQueue(DevicePageActivity.this);
+        String url = "http://" + clickedDevice.getIp() + ":80/";
+        System.out.println("Device URL: " + url);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                text.setText(response);
+                System.out.println("Request: " + response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                text.setText(error.toString());
+                System.out.println("Request error: " + error.toString());
+            }
+        });
+
+        //stringRequest.setRetryPolicy(new DefaultRetryPolicy(10000,
+        //        DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        requestQueue.add(stringRequest);
     }
 
     public void onDeviceDelete(View view){

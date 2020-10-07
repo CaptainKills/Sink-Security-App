@@ -14,10 +14,6 @@ import com.sinksecurity.R;
 import com.sinksecurity.devices.DeviceManager;
 import com.sinksecurity.devices.SinkSecurityDevice;
 
-import java.net.Inet4Address;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-
 public class AddDeviceActivity extends AppCompatActivity {
 
     private int selectedDeviceIconID = R.drawable.ic_bathroom_icon;
@@ -67,7 +63,7 @@ public class AddDeviceActivity extends AppCompatActivity {
 
     public void addDevice(View view){
         String deviceName = nameInputView.getText().toString();
-        String ipString = ipInputView.getText().toString();
+        String deviceIp = ipInputView.getText().toString();
 
         //Check for errors in the input fields.
         if(nameInputView.length() == 0 || ipInputView.length() == 0){
@@ -78,17 +74,8 @@ public class AddDeviceActivity extends AppCompatActivity {
             return;
         }
 
-        //Convert String to desired Type if necessary
-        InetAddress deviceIP = null;
-        try{
-            deviceIP = Inet4Address.getByName(ipString);
-        } catch (UnknownHostException e){
-            e.printStackTrace();
-        }
-
-
         //Create new Device from input, and add it to the DeviceList
-        SinkSecurityDevice device = new SinkSecurityDevice(selectedDeviceIconID, deviceName, deviceIP);
+        SinkSecurityDevice device = new SinkSecurityDevice(selectedDeviceIconID, deviceName, deviceIp);
         DeviceManager.addDevice(device);
         DeviceManager.saveData(this);
         Snackbar.make(view, "Device got successfully added!", Snackbar.LENGTH_SHORT).show();
