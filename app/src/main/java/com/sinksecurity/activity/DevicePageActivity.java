@@ -1,6 +1,5 @@
 package com.sinksecurity.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -9,16 +8,10 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NavUtils;
 
-import com.android.volley.Cache;
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Network;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.BasicNetwork;
-import com.android.volley.toolbox.DiskBasedCache;
-import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.sinksecurity.R;
@@ -42,9 +35,8 @@ public class DevicePageActivity extends AppCompatActivity {
             actionBar.setTitle(R.string.title_device_page);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-
-        Intent intent = getIntent();
-        clickedDevice = intent.getParcelableExtra("SinkSecurityDevice");
+        
+        clickedDevice = getIntent().getParcelableExtra("SinkSecurityDevice");
         setPageContents();
         createRequestQueue();
     }
@@ -75,9 +67,6 @@ public class DevicePageActivity extends AppCompatActivity {
                 System.out.println("Request error: " + error.toString());
             }
         });
-
-        //stringRequest.setRetryPolicy(new DefaultRetryPolicy(10000,
-        //        DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
         requestQueue.add(stringRequest);
     }
