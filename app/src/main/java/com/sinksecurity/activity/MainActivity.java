@@ -114,8 +114,6 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_search:
                 return searchDeviceList(item);
-            case R.id.action_device_page:
-                return goToActivity(DevicePageActivity.class);
             case R.id.action_settings:
                 return goToActivity(PreferencesActivity.class);
             default:

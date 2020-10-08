@@ -9,9 +9,6 @@
         app:showAsAction="ifRoom|collapseActionView"
         app:actionViewClass="android.widget.SearchView"/>
     <item
-        android:id="@+id/action_device_page"
-        android:title="@string/device_page_menu_item" />
-    <item
         android:id="@+id/action_settings"
         android:icon="@drawable/ic_settings"
         android:title="@string/title_settings"
