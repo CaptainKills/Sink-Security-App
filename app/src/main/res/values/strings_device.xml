@@ -37,4 +37,7 @@
     <string name="status_level_3">Currently rising water at level 3!</string>
 
     <string name="device_ip_placeholder">192.168.178.1</string>
+
+    <string name="device_change_details">Change details:</string>
+
 </resources>
