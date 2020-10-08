@@ -1,11 +1,13 @@
 package com.sinksecurity.activity;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NavUtils;
 
@@ -21,9 +23,7 @@ import com.sinksecurity.devices.SinkSecurityDevice;
 
 public class DevicePageActivity extends AppCompatActivity {
 
-    private RequestQueue requestQueue;
     private SinkSecurityDevice clickedDevice;
-
     private TextView statusText;
 
     @Override
@@ -39,7 +39,7 @@ public class DevicePageActivity extends AppCompatActivity {
 
         clickedDevice = getIntent().getParcelableExtra("SinkSecurityDevice");
         setPageContents();
-        createRequestQueue();
+        checkDeviceStatus(null);
     }
 
     /**
@@ -59,8 +59,9 @@ public class DevicePageActivity extends AppCompatActivity {
         deviceIpView.setText(clickedDevice.getIp());
     }
 
-    private void createRequestQueue(){
-        requestQueue = Volley.newRequestQueue(DevicePageActivity.this);
+    public void checkDeviceStatus(View view){
+        statusText.setText(R.string.device_status_check_text);
+        RequestQueue requestQueue = Volley.newRequestQueue(DevicePageActivity.this);
         String url = "http://" + clickedDevice.getIp() + ":80/";
         System.out.println("Device URL: " + url);
 
@@ -97,12 +98,19 @@ public class DevicePageActivity extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    public void onDeviceDelete(View view){
-        DeviceManager.removeDevice(clickedDevice);
-        int position = DeviceManager.getDevicePosition(clickedDevice);
-        DeviceManager.getDeviceAdapter().notifyItemRemoved(position);
-
-        NavUtils.navigateUpFromSameTask(this);
+    public void deleteDevice(View view){
+        new AlertDialog.Builder(DevicePageActivity.this)
+                .setTitle("Are you sure?")
+                .setMessage("Do you really want to delete this device?")
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        DeviceManager.removeDevice(clickedDevice);
+                        DeviceManager.saveData(DevicePageActivity.this);
+                        NavUtils.navigateUpFromSameTask(DevicePageActivity.this);
+                    }
+                })
+                .setNegativeButton(android.R.string.no, null).show();
     }
-
 }
