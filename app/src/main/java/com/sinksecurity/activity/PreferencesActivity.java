@@ -1,6 +1,7 @@
 package com.sinksecurity.activity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -12,6 +13,8 @@ import androidx.preference.PreferenceFragmentCompat;
 import com.sinksecurity.R;
 
 public class PreferencesActivity extends AppCompatActivity {
+
+    private static final String TAG = "PreferencesActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +31,8 @@ public class PreferencesActivity extends AppCompatActivity {
             actionBar.setTitle(R.string.title_settings);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+
+        Log.d(TAG, "Successfully Created Activity!");
     }
 
     @Override

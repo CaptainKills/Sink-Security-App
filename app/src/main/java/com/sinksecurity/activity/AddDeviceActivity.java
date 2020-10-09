@@ -1,6 +1,7 @@
 package com.sinksecurity.activity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioGroup;
@@ -15,6 +16,8 @@ import com.sinksecurity.devices.DeviceManager;
 import com.sinksecurity.devices.SinkSecurityDevice;
 
 public class AddDeviceActivity extends AppCompatActivity {
+
+    private static final String TAG = "AddDeviceActivity";
 
     private int selectedDeviceIconID = R.drawable.ic_bathroom_icon;
     private EditText nameInputView;
@@ -32,6 +35,7 @@ public class AddDeviceActivity extends AppCompatActivity {
         }
 
         buildLayout();
+        Log.d(TAG, "Successfully Created Activity!");
     }
 
     private void buildLayout(){

@@ -1,8 +1,10 @@
 package com.sinksecurity.activity;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -26,6 +28,8 @@ import com.sinksecurity.devices.SinkSecurityDevice;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = "MainActivity";
+
     private RecyclerView recyclerView;
     private DeviceAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -36,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         DeviceManager.loadData(this);
+        DeviceManager.startDeviceStatusChecks(this);
         buildRecyclerView();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -48,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
                goToActivity(AddDeviceActivity.class);
             }
         });
+
+        Log.d(TAG, "Successfully Created Activity!");
     }
 
     private void buildRecyclerView(){

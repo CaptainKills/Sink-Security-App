@@ -1,7 +1,9 @@
 package com.sinksecurity.activity;
 
+import android.app.Notification;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -10,6 +12,8 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NavUtils;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -18,10 +22,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.sinksecurity.R;
+import com.sinksecurity.SinkSecurityApp;
 import com.sinksecurity.devices.DeviceManager;
 import com.sinksecurity.devices.SinkSecurityDevice;
 
 public class DevicePageActivity extends AppCompatActivity {
+
+    private static final String TAG = "DevicePageActivity";
 
     private SinkSecurityDevice clickedDevice;
     private TextView statusText;
@@ -40,6 +47,8 @@ public class DevicePageActivity extends AppCompatActivity {
         clickedDevice = getIntent().getParcelableExtra("SinkSecurityDevice");
         setPageContents();
         checkDeviceStatus(null);
+
+        Log.d(TAG, "Successfully Created Activity!");
     }
 
     /**
@@ -63,12 +72,12 @@ public class DevicePageActivity extends AppCompatActivity {
         statusText.setText(R.string.device_status_check_text);
         RequestQueue requestQueue = Volley.newRequestQueue(DevicePageActivity.this);
         String url = "http://" + clickedDevice.getIp() + ":80/";
-        System.out.println("Device URL: " + url);
+        Log.d(TAG, "Device URL: " + url);
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                System.out.println("Request: " + response);
+                Log.d(TAG,"Request: " + response);
                 switch (response){
                     case "LEVEL_0":
                         statusText.setText(R.string.status_level_0);
@@ -91,7 +100,7 @@ public class DevicePageActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 statusText.setText(R.string.device_status_failed_text);
-                System.out.println("Request error: " + error.toString());
+                Log.d(TAG,"Request error: " + error.toString());
             }
         });
 

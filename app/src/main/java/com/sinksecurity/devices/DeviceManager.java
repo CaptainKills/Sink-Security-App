@@ -1,12 +1,19 @@
 package com.sinksecurity.devices;
 
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.sinksecurity.R;
 import com.sinksecurity.backend.DeviceAdapter;
+import com.sinksecurity.backend.DeviceStatusCheckService;
 
 import java.lang.reflect.Type;
 import java.util.LinkedHashMap;
@@ -17,6 +24,8 @@ import java.util.Map;
  * of saving and loading data from and to the storage.
  */
 public class DeviceManager {
+
+    private static final String TAG = "DeviceManager";
 
     private static LinkedHashMap<String, SinkSecurityDevice> deviceList;
     private static DeviceAdapter deviceAdapter;
@@ -37,6 +46,7 @@ public class DeviceManager {
     public static void addDevice(SinkSecurityDevice device){
         deviceList.put(device.getName(), device);
         deviceAdapter.notifyItemInserted(getDevicePosition(device));
+        Log.d(TAG, "Device Added: " + device.getName());
     }
 
     /**
@@ -47,6 +57,7 @@ public class DeviceManager {
     public static void removeDevice(SinkSecurityDevice device){
         deviceList.remove(device.getName());
         deviceAdapter.notifyItemRemoved(getDevicePosition(device));
+        Log.d(TAG, "Device Removed: " + device.getName());
     }
 
     /**
@@ -57,6 +68,7 @@ public class DeviceManager {
     public static void removeDevice(int position){
         deviceList.remove(getDevice(position).getName());
         deviceAdapter.notifyItemRemoved(position);
+        Log.d(TAG, "Device Removed: " + getDevice(position).getName());
     }
 
     /**
@@ -65,6 +77,7 @@ public class DeviceManager {
      * Context in which we can access the SharedPreferences. This is necessary to sava data.
      */
     public static void saveData(Context context){
+        Log.d(TAG, "Saving Device Data!");
         SharedPreferences sharedPref = context.getSharedPreferences(
                 context.getString(R.string.device_manager_file_key), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
@@ -74,6 +87,7 @@ public class DeviceManager {
 
         editor.putString(context.getString(R.string.device_list_file_key), json);
         editor.apply();
+        Log.d(TAG, "Data Saved Successfully!");
     }
 
     /**
@@ -82,6 +96,7 @@ public class DeviceManager {
      * Context in which we can access the SharedPreferences. This is necessary to load data.
      */
     public static void loadData(Context context){
+        Log.d(TAG, "Loading Device Data!");
         SharedPreferences sharedPref = context.getSharedPreferences(
                 context.getString(R.string.device_manager_file_key), Context.MODE_PRIVATE);
 
@@ -92,7 +107,44 @@ public class DeviceManager {
         deviceList = gson.fromJson(json, type);
         if(deviceList == null){
             deviceList = new LinkedHashMap<String, SinkSecurityDevice>();
+            Log.d(TAG, "No Data present: Creating New DeviceList");
         }
+        Log.d(TAG, "Data Saved Successfully!");
+    }
+
+    public static void startDeviceStatusChecks(Context context){
+        int i = 0;
+        Gson gson = new Gson();
+
+        Log.d(TAG, "Scheduling device status checks.");
+        for(SinkSecurityDevice device : deviceList.values()){
+            PersistableBundle bundle = new PersistableBundle();
+            bundle.putString("SinkSecurityDevice", gson.toJson(device));
+
+            ComponentName componentName = new ComponentName(context, DeviceStatusCheckService.class);
+            JobInfo info = new JobInfo.Builder(i, componentName)
+                    .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
+                    .setPersisted(true)
+                    .setPeriodic(15 * 60 * 1000)
+                    .setExtras(bundle)
+                    .build();
+
+            JobScheduler jobScheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
+            int resultCode = jobScheduler.schedule(info);
+            
+            if(resultCode == JobScheduler.RESULT_SUCCESS){
+                Log.d(TAG, "Job Scheduled: " + device.getName());
+            } else{
+                Log.d(TAG, "Job Schedule Failed: " + device.getName());
+            }
+            i++;
+        }
+    }
+
+    public static void stopDeviceStatusChecks(Context context, int position){
+        JobScheduler jobScheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
+        jobScheduler.cancel(position);
+        Log.d(TAG, "Job Cancelled: " + getDevice(position).getName());
     }
 
     /**
