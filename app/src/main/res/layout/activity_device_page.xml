@@ -57,16 +57,14 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:gravity="center"
-            android:orientation="vertical"
-            android:onClick="checkDeviceStatus">
+            android:orientation="vertical" >
 
             <ImageButton
-                android:id="@+id/imageButton"
+                android:id="@+id/page_disconnect_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/device_image_disconnect_description"
-                app:srcCompat="@android:drawable/stat_sys_phone_call_on_hold"
-                android:onClick="checkDeviceStatus" />
+                app:srcCompat="@android:drawable/stat_sys_phone_call_on_hold" />
 
             <TextView
                 android:id="@+id/page_disconnect_text"
@@ -106,13 +104,15 @@
             android:layout_margin="10dp"
             android:layout_marginEnd="8dp"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:onClick="checkDeviceStatus">
 
             <ImageButton
-                android:id="@+id/imageButton2"
+                android:id="@+id/page_refresh_button"
                 android:layout_width="43dp"
                 android:layout_height="wrap_content"
-                app:srcCompat="@android:drawable/ic_popup_sync" />
+                app:srcCompat="@android:drawable/ic_popup_sync"
+                android:onClick="checkDeviceStatus"/>
         </LinearLayout>
 
     </LinearLayout>
@@ -126,18 +126,6 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/page_buttons_layout" />
-
-    <View
-        android:id="@+id/divider3"
-        android:layout_width="wrap_content"
-        android:layout_height="1dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintBottom_toTopOf="@+id/sink_security_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -164,10 +152,41 @@
             android:id="@+id/page_device_status"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:text="@string/device_status_check_text"
             android:layout_gravity="center_vertical"
-            android:gravity="end"/>
+            android:layout_marginEnd="8dp"
+            android:gravity="end"
+            android:text="@string/device_status_check_text" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+
+        <TextView
+            android:id="@+id/page_device_change_details_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@string/device_change_details"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/page_device_change_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="8dp"
+            android:gravity="end"
+            android:text="@string/device_name_placeholder" />
     </LinearLayout>
 
     <LinearLayout
@@ -201,36 +220,17 @@
             android:text="@string/device_ip_placeholder" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+    <View
+        android:id="@+id/divider3"
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
-        android:orientation="horizontal"
+        android:layout_marginBottom="8dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintBottom_toTopOf="@+id/sink_security_text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
-
-        <TextView
-            android:id="@+id/page_device_change_details_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="@string/device_change_details"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/page_device_change_details"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginEnd="8dp"
-            android:gravity="end"
-            android:text="@string/device_name_placeholder" />
-    </LinearLayout>
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/sink_security_text"
