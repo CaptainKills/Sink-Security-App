@@ -61,8 +61,8 @@
 
             <ImageButton
                 android:id="@+id/page_disconnect_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:contentDescription="@string/device_image_disconnect_description"
                 app:srcCompat="@android:drawable/stat_sys_phone_call_on_hold" />
 
@@ -84,11 +84,11 @@
 
             <ImageButton
                 android:id="@+id/page_delete_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:contentDescription="@string/device_image_delete_description"
-                app:srcCompat="@drawable/ic_delete"
-                android:onClick="deleteDevice" />
+                android:onClick="deleteDevice"
+                app:srcCompat="@drawable/ic_delete" />
 
             <TextView
                 android:id="@+id/page_delete_text"
@@ -109,10 +109,11 @@
 
             <ImageButton
                 android:id="@+id/page_refresh_button"
-                android:layout_width="43dp"
-                android:layout_height="wrap_content"
-                app:srcCompat="@android:drawable/ic_popup_sync"
-                android:onClick="checkDeviceStatus"/>
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:contentDescription="@string/device_image_refresh_description"
+                android:onClick="checkDeviceStatus"
+                app:srcCompat="@android:drawable/ic_popup_sync" />
         </LinearLayout>
 
     </LinearLayout>
