@@ -17,6 +17,7 @@
     <!-- All string constant for the DeviceInfoPageActivity -->
     <string name="info_page_delete_text">Delete</string>
     <string name="info_page_disconnect_text">Disconnect</string>
+    <string name="refresh_status">Refresh</string>
 
     <!-- Standard DeviceItem Placeholders -->
     <string name="device_name_placeholder">Device Name</string>
@@ -39,6 +40,6 @@
 
     <string name="device_ip_placeholder">192.168.178.1</string>
 
-    <string name="device_change_details">Change details:</string>
+    <string name="device_name_view">Device Name:</string>
 
 </resources>
