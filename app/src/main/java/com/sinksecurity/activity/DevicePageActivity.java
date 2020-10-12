@@ -61,6 +61,9 @@ public class DevicePageActivity extends AppCompatActivity {
         TextView deviceNameView = findViewById(R.id.page_device_name);
         deviceNameView.setText(clickedDevice.getName());
 
+        TextView deviceNameViewText = findViewById(R.id.page_device_name_text);
+        deviceNameViewText.setText(clickedDevice.getName());
+
         statusText = findViewById(R.id.page_device_status);
         statusText.setText(R.string.device_status_check_text);
 

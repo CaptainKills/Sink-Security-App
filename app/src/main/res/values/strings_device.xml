@@ -16,8 +16,7 @@
 
     <!-- All string constant for the DeviceInfoPageActivity -->
     <string name="info_page_delete_text">Delete</string>
-    <string name="info_page_disconnect_text">Disconnect</string>
-    <string name="refresh_status">Refresh</string>
+    <string name="info_page_refresh_text">Refresh</string>
 
     <!-- Standard DeviceItem Placeholders -->
     <string name="device_name_placeholder">Device Name</string>
