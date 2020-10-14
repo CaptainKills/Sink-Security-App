@@ -5,7 +5,6 @@ import android.app.job.JobScheduler;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.util.Log;
 
@@ -107,9 +106,20 @@ public class DeviceManager {
         deviceList = gson.fromJson(json, type);
         if(deviceList == null){
             deviceList = new LinkedHashMap<String, SinkSecurityDevice>();
-            Log.d(TAG, "No Data present: Creating New DeviceList");
+            Log.d(TAG, "No Saved Data present: Creating New DeviceList");
+        } else{
+            Log.d(TAG, "Checking Loaded DeviceList: " + deviceList.size());
+            for(Map.Entry<String, SinkSecurityDevice> entry : deviceList.entrySet()){
+                if(entry.getValue() == null){
+                    deviceList.remove(entry.getKey());
+                    Log.d(TAG, "Invalid DeviceList entry: " + entry.getKey());
+                } else{
+                    Log.d(TAG, "Valid DeviceList entry: " + entry.getKey());
+                }
+            }
+            Log.d(TAG, "Checking Loaded DeviceList: " + deviceList.size());
         }
-        Log.d(TAG, "Data Saved Successfully!");
+        Log.d(TAG, "Data Loaded Successfully!");
     }
 
     public static void startDeviceStatusChecks(Context context){
