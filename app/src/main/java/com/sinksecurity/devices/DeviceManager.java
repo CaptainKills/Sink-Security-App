@@ -11,6 +11,7 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.sinksecurity.R;
+import com.sinksecurity.activity.MainActivity;
 import com.sinksecurity.backend.DeviceAdapter;
 import com.sinksecurity.backend.DeviceStatusCheckService;
 
@@ -110,18 +111,17 @@ public class DeviceManager {
         } else{
             Log.d(TAG, "Checking Loaded DeviceList: " + deviceList.size());
             for(Map.Entry<String, SinkSecurityDevice> entry : deviceList.entrySet()){
-                if(entry.getValue() == null){
-                    deviceList.remove(entry.getKey());
-                    Log.d(TAG, "Invalid DeviceList entry: " + entry.getKey());
-                } else{
-                    Log.d(TAG, "Valid DeviceList entry: " + entry.getKey());
-                }
+                Log.d(TAG, "DeviceList entry: " + entry.getKey());
             }
-            Log.d(TAG, "Checking Loaded DeviceList: " + deviceList.size());
         }
         Log.d(TAG, "Data Loaded Successfully!");
     }
 
+    /**
+     * Starts a Job for every Device currently in the DeviceList that will check the status of the device. See DeviceStatusCheckService class for more information.
+     * @param context
+     * Current context needed to get the JOB_SCHEDULER_SERVICE from System Services.
+     */
     public static void startDeviceStatusChecks(Context context){
         int i = 0;
         Gson gson = new Gson();
