@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 public class SinkSecurityDevice implements Parcelable {
 
+    private int deviceID;
     private int deviceImage;
     private String deviceName;
     private String deviceIp;
@@ -17,13 +18,15 @@ public class SinkSecurityDevice implements Parcelable {
      * @param ip
      * Internet IP address of the devices. Used to connect to the Arduino Internet Module.
      */
-    public SinkSecurityDevice(int deviceImage, String name, String ip){
+    public SinkSecurityDevice(int deviceID, int deviceImage, String name, String ip){
+        this.deviceID = deviceID;
         this.deviceImage = deviceImage;
         this.deviceName = name;
         this.deviceIp = ip;
     }
 
     protected SinkSecurityDevice(Parcel in) {
+        deviceID = in.readInt();
         deviceImage = in.readInt();
         deviceName = in.readString();
         deviceIp = in.readString();
@@ -48,9 +51,26 @@ public class SinkSecurityDevice implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(deviceID);
         dest.writeInt(deviceImage);
         dest.writeString(deviceName);
         dest.writeString(deviceIp);
+    }
+
+    /**
+     * @return Returns the Device ID
+     */
+    public int getDeviceID() {
+        return deviceID;
+    }
+
+    /**
+     * Sets the Device ID.
+     * @param deviceID
+     * ID of the Device
+     */
+    public void setDeviceID(int deviceID) {
+        this.deviceID = deviceID;
     }
 
     /**

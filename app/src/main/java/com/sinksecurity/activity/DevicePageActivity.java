@@ -119,7 +119,7 @@ public class DevicePageActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         DeviceManager.removeDevice(clickedDevice);
-                        DeviceManager.saveData(DevicePageActivity.this);
+                        DeviceManager.saveData();
                         NavUtils.navigateUpFromSameTask(DevicePageActivity.this);
                     }
                 })

@@ -15,6 +15,8 @@ import com.sinksecurity.R;
 import com.sinksecurity.devices.DeviceManager;
 import com.sinksecurity.devices.SinkSecurityDevice;
 
+import java.util.Random;
+
 public class AddDeviceActivity extends AppCompatActivity {
 
     private static final String TAG = "AddDeviceActivity";
@@ -78,12 +80,26 @@ public class AddDeviceActivity extends AppCompatActivity {
             return;
         }
 
+
         //Create new Device from input, and add it to the DeviceList
-        SinkSecurityDevice device = new SinkSecurityDevice(selectedDeviceIconID, deviceName, deviceIp);
+        SinkSecurityDevice device = new SinkSecurityDevice(generateID(), selectedDeviceIconID, deviceName, deviceIp);
         DeviceManager.addDevice(device);
-        DeviceManager.saveData(this);
+        DeviceManager.saveData();
         Snackbar.make(view, "Device got successfully added!", Snackbar.LENGTH_SHORT).show();
         NavUtils.navigateUpFromSameTask(this);
+    }
+
+    private int generateID(){
+        Random rand = new Random();
+        int deviceID = rand.nextInt(100);
+
+        for(SinkSecurityDevice device : DeviceManager.getDeviceList().values()){
+            if(device.getDeviceID() == deviceID){
+                deviceID = generateID();
+            }
+        }
+
+        return deviceID;
     }
 
     public void cancelDevice(View view){

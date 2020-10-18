@@ -5,6 +5,8 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.os.Build;
 
+import com.sinksecurity.devices.DeviceManager;
+
 public class SinkSecurityApp extends Application {
 
     public static final String CHANNEL_DEVICE_INFO_ID = "channel_device_info";
@@ -13,6 +15,9 @@ public class SinkSecurityApp extends Application {
     public void onCreate() {
         super.onCreate();
 
+        DeviceManager.setMainContext(this);
+        DeviceManager.loadData();
+        DeviceManager.startDeviceStatusChecks();
         createNotificationChannel();
     }
 

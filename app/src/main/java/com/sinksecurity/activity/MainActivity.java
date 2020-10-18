@@ -39,8 +39,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        DeviceManager.loadData(this);
-        DeviceManager.startDeviceStatusChecks(this);
         buildRecyclerView();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -84,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 DeviceManager.removeDevice(position);
-                                DeviceManager.saveData(MainActivity.this);
+                                DeviceManager.saveData();
                             }
                         })
                         .setNegativeButton(android.R.string.no, null).show();

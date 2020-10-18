@@ -1,5 +1,7 @@
 package com.sinksecurity.devices;
 
+import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import android.content.ComponentName;
@@ -27,6 +29,7 @@ public class DeviceManager {
 
     private static final String TAG = "DeviceManager";
 
+    private static Context mainContext;
     private static LinkedHashMap<String, SinkSecurityDevice> deviceList;
     private static DeviceAdapter deviceAdapter;
 
@@ -46,6 +49,7 @@ public class DeviceManager {
     public static void addDevice(SinkSecurityDevice device){
         deviceList.put(device.getName(), device);
         deviceAdapter.notifyItemInserted(getDevicePosition(device));
+        scheduleDeviceStatusJob(device);
         Log.d(TAG, "Device Added: " + device.getName());
     }
 
@@ -57,6 +61,7 @@ public class DeviceManager {
     public static void removeDevice(SinkSecurityDevice device){
         deviceList.remove(device.getName());
         deviceAdapter.notifyItemRemoved(getDevicePosition(device));
+        cancelDeviceStatusJob(device);
         Log.d(TAG, "Device Removed: " + device.getName());
     }
 
@@ -68,40 +73,37 @@ public class DeviceManager {
     public static void removeDevice(int position){
         deviceList.remove(getDevice(position).getName());
         deviceAdapter.notifyItemRemoved(position);
+        cancelDeviceStatusJob(getDevice(position));
         Log.d(TAG, "Device Removed: " + getDevice(position).getName());
     }
 
     /**
      * Method that will save the current DeviceList to storage.
-     * @param context
-     * Context in which we can access the SharedPreferences. This is necessary to sava data.
      */
-    public static void saveData(Context context){
+    public static void saveData(){
         Log.d(TAG, "Saving Device Data!");
-        SharedPreferences sharedPref = context.getSharedPreferences(
-                context.getString(R.string.device_manager_file_key), Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = mainContext.getSharedPreferences(
+                mainContext.getString(R.string.device_manager_file_key), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
 
         Gson gson = new Gson();
         String json = gson.toJson(deviceList);
 
-        editor.putString(context.getString(R.string.device_list_file_key), json);
+        editor.putString(mainContext.getString(R.string.device_list_file_key), json);
         editor.apply();
         Log.d(TAG, "Data Saved Successfully!");
     }
 
     /**
      * Method that will load the current DeviceList from storage.
-     * @param context
-     * Context in which we can access the SharedPreferences. This is necessary to load data.
      */
-    public static void loadData(Context context){
+    public static void loadData(){
         Log.d(TAG, "Loading Device Data!");
-        SharedPreferences sharedPref = context.getSharedPreferences(
-                context.getString(R.string.device_manager_file_key), Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = mainContext.getSharedPreferences(
+                mainContext.getString(R.string.device_manager_file_key), Context.MODE_PRIVATE);
 
         Gson gson = new Gson();
-        String json = sharedPref.getString(context.getString(R.string.device_list_file_key), null);
+        String json = sharedPref.getString(mainContext.getString(R.string.device_list_file_key), null);
         Type type = new TypeToken<LinkedHashMap<String, SinkSecurityDevice>>(){}.getType();
 
         deviceList = gson.fromJson(json, type);
@@ -119,42 +121,42 @@ public class DeviceManager {
 
     /**
      * Starts a Job for every Device currently in the DeviceList that will check the status of the device. See DeviceStatusCheckService class for more information.
-     * @param context
-     * Current context needed to get the JOB_SCHEDULER_SERVICE from System Services.
      */
-    public static void startDeviceStatusChecks(Context context){
-        int i = 0;
-        Gson gson = new Gson();
-
+    public static void startDeviceStatusChecks(){
         Log.d(TAG, "Scheduling device status checks.");
         for(SinkSecurityDevice device : deviceList.values()){
-            PersistableBundle bundle = new PersistableBundle();
-            bundle.putString("SinkSecurityDevice", gson.toJson(device));
-
-            ComponentName componentName = new ComponentName(context, DeviceStatusCheckService.class);
-            JobInfo info = new JobInfo.Builder(i, componentName)
-                    .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
-                    .setPersisted(true)
-                    .setPeriodic(15 * 60 * 1000)
-                    .setExtras(bundle)
-                    .build();
-
-            JobScheduler jobScheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
-            int resultCode = jobScheduler.schedule(info);
-            
-            if(resultCode == JobScheduler.RESULT_SUCCESS){
-                Log.d(TAG, "Job Scheduled: " + device.getName());
-            } else{
-                Log.d(TAG, "Job Schedule Failed: " + device.getName());
-            }
-            i++;
+            scheduleDeviceStatusJob(device);
         }
     }
 
-    public static void stopDeviceStatusChecks(Context context, int position){
-        JobScheduler jobScheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
-        jobScheduler.cancel(position);
-        Log.d(TAG, "Job Cancelled: " + getDevice(position).getName());
+    private static void scheduleDeviceStatusJob(SinkSecurityDevice device){
+        Gson gson = new Gson();
+
+        PersistableBundle bundle = new PersistableBundle();
+        bundle.putString("SinkSecurityDevice", gson.toJson(device));
+
+        ComponentName componentName = new ComponentName(mainContext, DeviceStatusCheckService.class);
+        JobInfo info = new JobInfo.Builder(device.getDeviceID(), componentName)
+                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
+                .setPersisted(true)
+                .setPeriodic(15 * 60 * 1000)
+                .setExtras(bundle)
+                .build();
+
+        JobScheduler jobScheduler = (JobScheduler) mainContext.getSystemService(Context.JOB_SCHEDULER_SERVICE);
+        int resultCode = jobScheduler.schedule(info);
+
+        if(resultCode == JobScheduler.RESULT_SUCCESS){
+            Log.d(TAG, "Job Scheduled: " + device.getName());
+        } else{
+            Log.d(TAG, "Job Schedule Failed: " + device.getName());
+        }
+    }
+
+    public static void cancelDeviceStatusJob(SinkSecurityDevice device){
+        JobScheduler jobScheduler = (JobScheduler) mainContext.getSystemService(Context.JOB_SCHEDULER_SERVICE);
+        jobScheduler.cancel(device.getDeviceID());
+        Log.d(TAG, "Job Cancelled: " + device.getName());
     }
 
     /**
@@ -206,10 +208,11 @@ public class DeviceManager {
     }
 
     /**
-     *
-     * @return Returns the DeviceAdapter that takes care of the item list.
+     * Method to set the MainContext that is used to schedule jobs.
+     * @param context
+     * The content to whicht the MainContent will be set to.
      */
-    public static DeviceAdapter getDeviceAdapter(){
-        return deviceAdapter;
+    public static void setMainContext(Context context){
+        mainContext = context;
     }
 }
