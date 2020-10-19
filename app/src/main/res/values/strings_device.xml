@@ -33,7 +33,7 @@
     <string name="device_status_error_text">Failed to check status.</string>
 
     <string name="status_level_0">No water detected.</string>
-    <string name="status_level_1">Water has touched the sensor!</string>
+    <string name="status_level_1">Water has reached the sensor!</string>
     <string name="status_level_2">Water has reached the halfway point!</string>
     <string name="status_level_3">Water has reached the top!</string>
 
