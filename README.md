@@ -1,5 +1,5 @@
 # Engineering Design App
-Engineering Design Course 4WWB0 Companion Application for Android. This project will explore the possibilities with Android App development in combination with IoT devices.
+Android Application for the Sink Security project design of 4WBB0 Engineering Design.
 
 ## Special Thanks
 * **Kaj Coolen** - Creator of Program Icon - [KajCoolen26](https://kajcoolen26.wixsite.com/portfoliokajcoolen)
