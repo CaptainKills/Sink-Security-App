@@ -1,7 +1,5 @@
 package com.sinksecurity.devices;
 
-import android.app.Activity;
-import android.app.ActivityManager;
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import android.content.ComponentName;
@@ -13,7 +11,6 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.sinksecurity.R;
-import com.sinksecurity.activity.MainActivity;
 import com.sinksecurity.backend.DeviceAdapter;
 import com.sinksecurity.backend.DeviceStatusCheckService;
 

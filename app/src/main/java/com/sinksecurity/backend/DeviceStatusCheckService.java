@@ -3,7 +3,6 @@ package com.sinksecurity.backend;
 import android.app.Notification;
 import android.app.job.JobParameters;
 import android.app.job.JobService;
-import android.content.Context;
 import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
@@ -18,7 +17,6 @@ import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.sinksecurity.R;
 import com.sinksecurity.SinkSecurityApp;
-import com.sinksecurity.activity.MainActivity;
 import com.sinksecurity.devices.DeviceManager;
 import com.sinksecurity.devices.SinkSecurityDevice;
 

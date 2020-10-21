@@ -1,6 +1,5 @@
 package com.sinksecurity.activity;
 
-import android.app.Notification;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,8 +11,6 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NavUtils;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -22,7 +19,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.sinksecurity.R;
-import com.sinksecurity.SinkSecurityApp;
 import com.sinksecurity.devices.DeviceManager;
 import com.sinksecurity.devices.SinkSecurityDevice;
 
@@ -110,7 +106,7 @@ public class DevicePageActivity extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    public void deleteDevice(View view){
+    public void deleteDevice(View view) {
         new AlertDialog.Builder(DevicePageActivity.this)
                 .setTitle("Are you sure?")
                 .setMessage("Do you really want to delete this device?")
